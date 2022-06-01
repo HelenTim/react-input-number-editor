@@ -64,31 +64,28 @@ function Example() {
 
 ## Usage
 
-| Prop          | Description                                                  | Type    | Default  | Required |
-| ------------- | ------------------------------------------------------------ | ------- | -------- | -------- |
-| value         | The value to set the input to                                | number  | 0        | Yes      |
-| min           | The minimum value reachable                                  | number  | -        | No       |
-| max           | The maximum value reachable                                  | number  | -        | No       |
-| precision     | Number of decimals                                           | number  | 0        | No       |
-| step          | Number of the stepping                                       | number  | 1        | No       |
-| stepModifier  | Modifier for the stepping (Ctrl and Shift key)               | number  | 10       | No       |
-| slideModifier | Modifier for the sliding/dragging mode                       | string  | 0.3      | No       |
-| onChange      | Callback called on value change。参数为一个对象{newInternalValue,event,moveNumbers:{movementX,movementY}}。newInternalValue：拖拽得到的最新值。movementX：鼠标在x轴每一次移动的距离；movementY：鼠标在y轴每一次移动的距离。 | func    | () => () | No       |
-| mouseSpeed    | 调整鼠标速度                                                 | number  | 1        | No       |
-| showInput     | 是否显示input框，只有在当前组件有子组件的情况下生效（有时我们并不需要input元素） | Boolean | true     | No       |
-| doubleSpeed   | 当鼠标在y方向轴翻页时自动调节文字改变速度                    | number  | 1        | No       |
-| onMouseUp     | 鼠标事件，返回参数event                                      |         |          |          |
-| onMouseDown   | 鼠标事件，返回参数event                                      |         |          |          |
+| Prop          | Description                                                  | Type     | Default  | Required |
+| ------------- | ------------------------------------------------------------ | -------- | -------- | -------- |
+| value         | The value to set the input to                                | number   | 0        | Yes      |
+| min           | The minimum value reachable                                  | number   | -        | No       |
+| max           | The maximum value reachable                                  | number   | -        | No       |
+| precision     | Number of decimals                                           | number   | 0        | No       |
+| step          | Number of the stepping                                       | number   | 1        | No       |
+| stepModifier  | Modifier for the stepping (Ctrl and Shift key)               | number   | 10       | No       |
+| slideModifier | Modifier for the sliding/dragging mode                       | string   | 0.3      | No       |
+| onChange      | Callback called on value change。参数为一个对象{newInternalValue,event,moveNumbers:{movementX,movementY}}。newInternalValue：拖拽得到的最新值。movementX：鼠标在x轴每一次移动的距离；movementY：鼠标在y轴每一次移动的距离。 | func     | () => () | No       |
+| mouseSpeed    | 调整鼠标速度                                                 | number   | 1        | No       |
+| showInput     | 是否显示input框，只有在当前组件有子组件的情况下生效（有时我们并不需要input元素） | Boolean  | true     | No       |
+| doubleSpeed   | 当鼠标在y方向翻页时自动调节数字改变速度                      | number   | 1        | No       |
+| onMouseUp     | 鼠标事件，返回参数event                                      | function |          | No       |
+| onMouseDown   | 鼠标事件，返回参数event                                      | function |          | No       |
+| onMouseMove   | 鼠标事件，返回参数是一个对象{ moveNumbers: { movementX: movementX * mouseSpeed, movementY: movementY * mouseSpeed, }, event } | function |          | No       |
 
 对原项目的修改如下：
 
 添加了mouseSpeed、showInput、doubleSpeed属性，以提供更多的可选项。
 
 添加onMouseUp、onMouseDown事件，以及改变onChange事件返回的参数。
-
-
-
-
 
 
 
