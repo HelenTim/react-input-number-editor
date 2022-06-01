@@ -85,7 +85,21 @@ function Example() {
 
 添加了mouseSpeed、showInput、doubleSpeed属性，以提供更多的可选项。
 
-添加onMouseUp、onMouseDown事件，以及改变onChange事件返回的参数。
+添加onMouseUp、onMouseDown、onMouseMove事件，以及改变onChange事件返回的参数。
+
+添加的demo：
+
+<iframe 
+src="./media/Video_20220601215017.mp4" 
+scrolling="no" 
+border="0" 
+frameborder="no" 
+framespacing="0" 
+allowfullscreen="true" 
+height=600 
+width=800> 
+</iframe>
+
 
 
 
