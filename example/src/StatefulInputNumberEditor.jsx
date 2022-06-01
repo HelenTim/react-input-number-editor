@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import InputNumberEditor from 'react-input-number-editor';
+import React, {useState} from 'react';
+import InputNumberEditor from 'react-input-number-editor-more';
 
 function StatefulInputNumberEditor(props) {
     const { onChange } = props;
