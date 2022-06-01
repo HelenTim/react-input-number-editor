@@ -73,7 +73,7 @@ function Example() {
 | step          | Number of the stepping                                       | number  | 1        | No       |
 | stepModifier  | Modifier for the stepping (Ctrl and Shift key)               | number  | 10       | No       |
 | slideModifier | Modifier for the sliding/dragging mode                       | string  | 0.3      | No       |
-| onChange      | Callback called on value change。返回一个对象{newInternalValue,event,moveNumbers:{movementX,movementY}}。newInternalValue：拖拽得到的最新值。movementX：鼠标在x轴每一次移动的距离；movementY：鼠标在y轴每一次移动的距离。 | func    | () => () | No       |
+| onChange      | Callback called on value change。参数为一个对象{newInternalValue,event,moveNumbers:{movementX,movementY}}。newInternalValue：拖拽得到的最新值。movementX：鼠标在x轴每一次移动的距离；movementY：鼠标在y轴每一次移动的距离。 | func    | () => () | No       |
 | mouseSpeed    | 调整鼠标速度                                                 | number  | 1        | No       |
 | showInput     | 是否显示input框，只有在当前组件有子组件的情况下生效（有时我们并不需要input元素） | Boolean | true     | No       |
 | doubleSpeed   | 当鼠标在y方向轴翻页时自动调节文字改变速度                    | number  | 1        | No       |
