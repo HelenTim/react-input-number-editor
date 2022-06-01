@@ -24,6 +24,7 @@ function InputNumberEditor(props) {
         mouseSpeed,
         showInput,
         doubleSpeed,
+        onMouseMove
     } = props;
 
     const [displayValue, setDisplayValue] = useState(formatValue(value));
@@ -69,24 +70,27 @@ function InputNumberEditor(props) {
         if (isPointerLocked && !readOnly) document.exitPointerLock();
     }
     function handleMouseMove(event) {
-        let {
-            movementX,
-            movementY,
-            screenY,
-            clientY,
-            clientX,
-            pageY,
-            pageX
-        } = event;
+        let { movementX, movementY } = event;
         let movementXnew = movementX;
         if (shiftKey) {
             movementXnew = movementX * stepModifier;
         } else if (ctrlKey) {
             movementXnew = movementX / stepModifier;
         }
+        onMouseMove &&
+            onMouseMove({
+                moveNumbers: {
+                    movementX: movementX * mouseSpeed,
+                    movementY: movementY * mouseSpeed,
+                },
+                event
+            });
         if (isPointerLocked && movementX) {
             addValue(
-                movementXnew * Math.pow(10, -precision) * slideModifier*doubleSpeed,
+                movementXnew *
+                    Math.pow(10, -precision) *
+                    slideModifier *
+                    doubleSpeed,
                 true,
                 event,
                 {
@@ -96,7 +100,6 @@ function InputNumberEditor(props) {
             );
         }
     }
-
     function handleKeyDown(event) {
         const { key, shiftKey, ctrlKey } = event;
         setShiftKey(shiftKey);
@@ -132,9 +135,14 @@ function InputNumberEditor(props) {
         setIsPointerLocked(locked);
     }
 
-    function handleChange({ target }) {
+    function handleChange(event) {
+        const { target } = event;
         if (!isEditing) setIsEditing(true);
-
+        onChange({
+            newInternalValue: target.value, // 新值
+            event, // 鼠标拖动事件对象
+            moveNumbers: { movementX: 0, movementY: 0 } // 每一次x，y的偏移量
+        });
         setDisplayValue(target.value);
     }
 
@@ -171,7 +179,7 @@ function InputNumberEditor(props) {
             const newInternalValue = Number(newValue.toFixed(precision)); // 返回给事件的值
             setInternalValue(newInternalValue);
             if (onChange && triggerEvent) {
-                // 这里输出值
+                // 这里输出值是否发生变化
                 onChange({
                     newInternalValue, // 新值
                     event, // 鼠标拖动事件对象
@@ -242,7 +250,8 @@ InputNumberEditor.propTypes = {
     onChange: PropTypes.func,
     mouseSpeed: PropTypes.number,
     showInput: PropTypes.bool,
-    doubleSpeed:PropTypes.number,
+    doubleSpeed: PropTypes.number,
+    onMouseMove: PropTypes.func
 };
 InputNumberEditor.defaultProps = {
     value: 0,
@@ -252,7 +261,7 @@ InputNumberEditor.defaultProps = {
     precision: 0,
     mouseSpeed: 1,
     showInput: true,
-    doubleSpeed:1,
+    doubleSpeed: 1
 };
 
 export default InputNumberEditor;
