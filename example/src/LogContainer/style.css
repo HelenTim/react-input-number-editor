@@ -1,0 +1,11 @@
+.log-container {
+    max-width: 500px;
+    height: 200px;
+    margin-top: 5px;
+    border: 1px solid grey;
+    overflow-y: auto;
+}
+
+.log-container > span {
+    display: block;
+}

@@ -1,0 +1,112 @@
+image: node:12-alpine
+
+stages:
+  - lib:build
+  - lib:test
+  - example:build
+  - deploy
+
+lib:build:
+  stage: lib:build
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - node_modules/
+      - example/node_modules/
+    policy: pull-push
+  script:
+    - yarn install
+    - yarn run build
+  artifacts:
+    paths:
+      - dist/
+  only:
+    refs:
+      - branches
+      - merge_requests
+
+lib:test:
+  stage: lib:test
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - node_modules/
+      - example/node_modules/
+    policy: pull
+  script:
+    - yarn run test:coverage
+  coverage: /All files\s*\|\s*([\d\.]+)/
+  dependencies:
+    - lib:build
+  artifacts:
+    paths:
+      - coverage/
+  only:
+    refs:
+      - branches
+      - merge_requests
+
+lib:deploy:
+  stage: deploy
+  script:
+    - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+    - yarn publish
+  dependencies:
+    - lib:build
+  when: manual
+  only:
+    refs:
+      - master
+  except:
+    - tags
+    - merge_requests
+
+example:build:
+  stage: example:build
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - node_modules/
+      - example/node_modules/
+    policy: pull-push
+  script:
+    - cd example/
+    - yarn install
+    - yarn run build
+  dependencies:
+    - lib:build
+  artifacts:
+    paths:
+      - example/build/
+  only:
+    refs:
+      - master
+    changes:
+      - example/**/*
+  except:
+    - tags
+    - merge_requests
+
+pages:
+  stage: deploy
+  cache: {}
+  script:
+    - cd example/
+    - rm -rf public/
+    - mv build/ ../public/
+    - cd ..
+    - mv coverage public/coverage
+  dependencies:
+    - example:build
+    - lib:test
+  artifacts:
+    paths:
+      - public/
+  only:
+    refs:
+      - master
+    changes:
+      - example/**/*
+  except:
+    - tags
+    - merge_requests

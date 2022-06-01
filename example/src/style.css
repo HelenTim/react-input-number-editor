@@ -1,0 +1,13 @@
+.editing {
+    border-color: orange;
+    color: blue;
+    font-weight: bold;
+}
+
+.bordered {
+  border: 1px solid grey;
+}
+
+.bordered.blue {
+  border-color: blue;
+}
