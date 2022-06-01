@@ -138,7 +138,7 @@ function InputNumberEditor(props) {
     function handleChange(event) {
         const { target } = event;
         if (!isEditing) setIsEditing(true);
-        onChange({
+        onChange && onChange({
             newInternalValue: target.value, // 新值
             event, // 鼠标拖动事件对象
             moveNumbers: { movementX: 0, movementY: 0 } // 每一次x，y的偏移量
