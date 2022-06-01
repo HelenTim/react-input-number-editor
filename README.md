@@ -1,4 +1,4 @@
-# react-input-number-editor
+# react-input-number-editor-more
 
 > React component that act like adobe suite editor number input field that can be slided.
 
@@ -27,13 +27,13 @@ Live demo available [here](https://vinarnt.gitlab.io/react-input-number-editor)
 ## Install
 
 ```bash
-$ npm install --save react-input-number-editor
+npm install --save react-input-number-editor-more
 ```
 
 Or
 
 ```bash
-$ yarn add react-input-number-editor
+yarn add react-input-number-editor-more
 ```
 
 ## Example
@@ -41,7 +41,7 @@ $ yarn add react-input-number-editor
 ```jsx
 import React, { useState } from 'react';
 
-import InputNumberEditor from 'react-input-number-editor';
+import InputNumberEditor from 'react-input-number-editor-more';
 
 function Example() {
     const [value, setValue] = useState(0);
