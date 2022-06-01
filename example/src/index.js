@@ -18,6 +18,7 @@ function Demo() {
         movementY: 0
     });
     const [moveYDistance, setMoveYDistance] = useState(0);
+     const [doubleSpeed, setDoubleSpeed] = useState(1);
 
     function handleInputChange(value) {
         setLogs([...logs, 'Value changed to ' + value]);
@@ -66,6 +67,7 @@ function Demo() {
         }
     }, [moveNumbers]);
     useEffect(() => {
+        setDoubleSpeed(Math.pow(2, +parseInt(-moveYDistance / 150)));
         setMoveYDistance(moveYDistance + moveNumbers.movementY);
     }, [moveNumbers]);
 
@@ -77,6 +79,7 @@ function Demo() {
     }
 
     function mouseUp(e) {
+        setDoubleSpeed(1);
         setShow(false);
     }
 
@@ -116,21 +119,22 @@ function Demo() {
           <InputNumberEditor className={"bordered blue"} />
           <h2>Read only input</h2>
           <InputNumberEditor readOnly />
-            
 
-
-
-            <InputNumberEditor
+           <InputNumberEditor
                 onMouseUp={mouseUp}
                 onMouseDown={mouseDown}
+                onMouseMove={justsc}
                 className={'bordered blue'}
                 stepModifier={10}
-                onChange={justsc}
+                // onChange={justsc}
                 mouseSpeed={1.2}
+                doubleSpeed={doubleSpeed}
             >
                 <div>新加ref</div>
             </InputNumberEditor>
 
+            <div>Y轴控制速度：{doubleSpeed}</div>
+            <div>Y轴移动的距离：{moveYDistance}</div>
             <div>{clientX}</div>
             <div>{clientY}</div>
 
