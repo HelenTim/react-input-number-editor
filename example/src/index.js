@@ -130,6 +130,7 @@ function Demo() {
                 mouseSpeed={1.2}
                 doubleSpeed={doubleSpeed}
             >
+                { /* 鼠标放在div上拖动即可 */ }
                 <div>新加ref</div>
             </InputNumberEditor>
 

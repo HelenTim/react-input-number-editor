@@ -10,7 +10,9 @@
 
 ![Preview Image](https://gitlab.com/Vinarnt/react-input-number-editor/raw/master/resources/preview.gif 'Preview')
 
-Live demo available [here](https://vinarnt.gitlab.io/react-input-number-editor)
+Live demo available [here](https://vinarnt.gitlab.io/react-input-number-editor)   
+
+[示例代码](https://gitlab.com/Vinarnt/react-input-number-editor/-/tree/master/example)
 
 ## Features
 
@@ -87,7 +89,7 @@ function Example() {
 
 添加onMouseUp、onMouseDown、onMouseMove事件，以及改变onChange事件返回的参数。
 
-**给此组件添子组件时，子组件将作为鼠标操作对象，同样可以操作数字**。
+**给此组件添子组件时，子组件将作为鼠标操作对象，同样可以操作数字**。[demo](https://github.com/HelenTim/react-input-number-editor/blob/main/example/src/index.js)
 
 添加的demo：
 
