@@ -87,6 +87,8 @@ function Example() {
 
 添加onMouseUp、onMouseDown、onMouseMove事件，以及改变onChange事件返回的参数。
 
+**给此组件添子组件时，子组件将作为鼠标操作对象，同样可以操作数字**。
+
 添加的demo：
 
 <iframe 
