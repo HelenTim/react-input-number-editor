@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 export const KEYS = {
     BACKSPACE: 'Backspace',
@@ -28,9 +28,8 @@ function InputNumberEditor(props) {
     } = props;
 
     const [displayValue, setDisplayValue] = useState(formatValue(value));
-    const [internalValue, setInternalValue] = useState(
-        Number(formatValue(value))
-    );
+    const internalValue = useRef(Number(formatValue(value)));
+    const beforeValue = useRef(NaN);
     const [isEditing, setIsEditing] = useState(false);
     const [isPointerLocked, setIsPointerLocked] = useState(false);
 
@@ -81,7 +80,7 @@ function InputNumberEditor(props) {
             onMouseMove({
                 moveNumbers: {
                     movementX: movementX * mouseSpeed,
-                    movementY: movementY * mouseSpeed,
+                    movementY: movementY * mouseSpeed
                 },
                 event
             });
@@ -138,17 +137,18 @@ function InputNumberEditor(props) {
     function handleChange(event) {
         const { target } = event;
         if (!isEditing) setIsEditing(true);
-        onChange && onChange({
-            newInternalValue: target.value, // 新值
-            event, // 鼠标拖动事件对象
-            moveNumbers: { movementX: 0, movementY: 0 } // 每一次x，y的偏移量
-        });
+        onChange &&
+            onChange({
+                newInternalValue: target.value, // 新值
+                event, // 鼠标拖动事件对象
+                moveNumbers: { movementX: 0, movementY: 0 } // 每一次x，y的偏移量
+            });
         setDisplayValue(target.value);
     }
 
     function cancelEditing() {
         setIsEditing(false);
-        setDisplayValue(formatValue(internalValue));
+        setDisplayValue(formatValue(internalValue.current));
     }
 
     function confirmEditing() {
@@ -166,22 +166,25 @@ function InputNumberEditor(props) {
         moveNumbers
     ) {
         if (typeof value !== 'number') value = Number(value);
-        if (isNaN(value)) value = internalValue;
+        if (isNaN(value)) value = internalValue.current;
 
         let newValue = value;
 
         if (min !== undefined && newValue < min) newValue = min;
         else if (max !== undefined && newValue > max) newValue = max;
 
-        if (updateDisplay || Number(displayValue) !== newValue)
+        if (updateDisplay || Number(displayValue) !== newValue) {
             setDisplayValue(formatValue(newValue)); // 设置input的value值
-        if (internalValue !== newValue) {
-            const newInternalValue = Number(newValue.toFixed(precision)); // 返回给事件的值
-            setInternalValue(newInternalValue);
+        }
+
+        const lastValue = Number(newValue.toFixed(precision)); // 返回给事件的值
+        if (beforeValue.current !== lastValue) {
+            internalValue.current = value;
+            beforeValue.current = lastValue;
             if (onChange && triggerEvent) {
                 // 这里输出值是否发生变化
                 onChange({
-                    newInternalValue, // 新值
+                    newInternalValue: lastValue, // 新值
                     event, // 鼠标拖动事件对象
                     moveNumbers // 每一次x，y的偏移量
                 });
@@ -191,8 +194,8 @@ function InputNumberEditor(props) {
 
     function addValue(amount, updateDisplay, event, moveNumbers) {
         if (typeof amount !== 'number') amount = Number(amount);
-        let newValue = internalValue + amount;
-
+        let newValue = internalValue.current + amount;
+        internalValue.current = newValue;
         changeValue(newValue, updateDisplay, true, event, moveNumbers);
     }
 
